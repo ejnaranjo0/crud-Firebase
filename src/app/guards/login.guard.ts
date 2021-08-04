@@ -9,17 +9,17 @@ export class LoginGuard implements CanActivate {
 
   constructor( private servicio: AuthService,
                private router: Router) {}
-
-  canActivate(){
-    let userAuth = this.servicio.estoyAutenticado();
-    if(userAuth){
-      console.log("Usuario autenticado");
-      return true;
-    }else{
-      console.log("Usuario no autenticado");
-      this.router.navigate(['/login']);
-      return false;
-    }
+               
+  async canActivate() {
+      const user = await this.servicio.estoyAutenticado();
+      if (user) {
+        console.log("Usuario autenticado");
+        return true;
+      } else {
+        console.log("Usuario no autenticado");
+        this.router.navigate(['/login']);
+        return false;
+      }
   }
   
 }
